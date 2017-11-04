@@ -6,8 +6,25 @@ import Battleship from './Battleship';
 
 import { shallow, mount } from 'enzyme';
 
-it('renders without crashing', () => {
-  shallow(<App />);
+describe('<App/>', () => {
+  let component = shallow(<App name={"Joe"}/>);
+  it ('should contain one H1 tag', () => {
+    expect(component.find('h1')).toHaveLength(1);
+  })
+
+  it('with appropriate class .App-title', () => {
+    expect(component.find('.App-title')).toHaveLength(1);
+  });
+
+  it('should receive props correctly', () => {
+    expect(component.instance().props.name).toEqual("Joe");
+  });
+
+  it ('should set props correctly in h1 text', () => {
+    let headerText = component.find('.App-title').text();
+    expect(headerText).toEqual('Welcome to React, Joe');
+    expect(headerText).not.toEqual('Welcome to react, Mildred');
+  });
 });
 
 describe('sum()', () => {
@@ -50,5 +67,3 @@ describe('<Battleship/>', () => {
   });
 
 });
-
-
